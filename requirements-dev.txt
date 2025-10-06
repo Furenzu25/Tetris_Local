@@ -1,0 +1,4 @@
+# Development and build dependencies
+pygame>=2.5.0
+pyinstaller>=6.0.0
+

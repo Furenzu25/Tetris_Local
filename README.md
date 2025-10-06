@@ -44,23 +44,51 @@ A modern Tetris game with LAN multiplayer support and TETR.IO-style preview syst
 
 ## Installation
 
+### Option 1: Standalone Executable (No Python Required!)
+
+**Perfect for computers where terminal is blocked!**
+
+1. **Build the executable:**
+   - Windows: Double-click `build_windows.bat`
+   - macOS/Linux: Run `./build.sh`
+
+2. **Get your file:**
+   - Find `Tetris_Launcher.exe` (Windows) or `Tetris_Launcher.app` (macOS) in `dist/` folder
+
+3. **Share with friends:**
+   - Just send them the executable file
+   - Double-click to run - no installation needed!
+
+See [PACKAGING.md](PACKAGING.md) for detailed instructions.
+
+### Option 2: Run with Python
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-### Single Player
+### With Executable (Easy!)
+
+Just double-click `Tetris_Launcher.exe` and choose:
+- 🎮 Single Player
+- 🖥️  Host LAN Game  
+- 🔌 Join LAN Game
+
+### With Python (Terminal)
+
+**Single Player:**
 ```bash
 python main.py --mode single
 ```
 
-### Host LAN Game
+**Host LAN Game:**
 ```bash
 python main.py --mode host --port 5555
 ```
 
-### Join LAN Game
+**Join LAN Game:**
 ```bash
 python main.py --mode join --host 192.168.1.100 --port 5555
 ```
