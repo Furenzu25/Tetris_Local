@@ -31,6 +31,20 @@ class GameController:
         self.clock = pygame.time.Clock()
         self.running = True
         
+        # Input handling for held keys
+        self.keys_held = {
+            'left': False,
+            'right': False,
+            'down': False,
+        }
+        self.last_move_time = {
+            'left': 0,
+            'right': 0,
+            'down': 0,
+        }
+        self.move_delay = 0.1  # Delay between moves when holding (seconds)
+        self.initial_move_delay = 0.15  # Slightly longer initial delay
+        
         # Networking
         self.server = None
         self.client = None
@@ -92,13 +106,19 @@ class GameController:
             if self.game_engine.game_over or self.game_engine.paused:
                 return
             
-            # Movement
+            # Movement - initial press
             if event.key == pygame.K_LEFT:
                 self.game_engine.move_left()
+                self.keys_held['left'] = True
+                self.last_move_time['left'] = time.time()
             elif event.key == pygame.K_RIGHT:
                 self.game_engine.move_right()
+                self.keys_held['right'] = True
+                self.last_move_time['right'] = time.time()
             elif event.key == pygame.K_DOWN:
                 self.game_engine.move_down()
+                self.keys_held['down'] = True
+                self.last_move_time['down'] = time.time()
             
             # Rotation
             elif event.key == pygame.K_UP or event.key == pygame.K_x:
@@ -113,6 +133,15 @@ class GameController:
             # Hold
             elif event.key == pygame.K_LSHIFT:
                 self.game_engine.hold_current_piece()
+        
+        elif event.type == pygame.KEYUP:
+            # Stop holding keys
+            if event.key == pygame.K_LEFT:
+                self.keys_held['left'] = False
+            elif event.key == pygame.K_RIGHT:
+                self.keys_held['right'] = False
+            elif event.key == pygame.K_DOWN:
+                self.keys_held['down'] = False
     
     def update(self, delta_time):
         """
@@ -121,6 +150,31 @@ class GameController:
         Args:
             delta_time (float): Time elapsed since last update
         """
+        # Handle held keys for continuous movement
+        if not self.game_engine.game_over and not self.game_engine.paused:
+            current_time = time.time()
+            
+            # Left key held
+            if self.keys_held['left']:
+                time_since_last = current_time - self.last_move_time['left']
+                if time_since_last >= self.move_delay:
+                    if self.game_engine.move_left():
+                        self.last_move_time['left'] = current_time
+            
+            # Right key held
+            if self.keys_held['right']:
+                time_since_last = current_time - self.last_move_time['right']
+                if time_since_last >= self.move_delay:
+                    if self.game_engine.move_right():
+                        self.last_move_time['right'] = current_time
+            
+            # Down key held
+            if self.keys_held['down']:
+                time_since_last = current_time - self.last_move_time['down']
+                if time_since_last >= self.move_delay:
+                    self.game_engine.move_down()
+                    self.last_move_time['down'] = current_time
+        
         # Update game engine
         self.game_engine.update(delta_time)
         
