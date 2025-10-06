@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Simple Tetris Launcher - Single Player Mode
+Simple Tetris launcher - goes straight to single player mode.
+No GUI needed, just runs the game directly.
 """
 
 import sys
@@ -11,21 +12,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     try:
-        print("Starting Tetris Single Player...")
+        print("Starting Tetris...")
         
         # Import and run single player game
         from game_controller import GameController
         
-        print("✓ Game loaded successfully!")
-        print("Controls:")
-        print("  Arrow Keys: Move piece")
-        print("  Up/X: Rotate clockwise")
-        print("  Z: Rotate counter-clockwise")
-        print("  Space: Hard drop")
-        print("  Left Shift: Hold piece")
-        print("  ESC: Pause")
-        print("  R: Restart (when game over)")
-        print()
+        print("✓ Game controller loaded")
+        print("Starting single player mode...")
+        print("Press ESC to pause, R to restart when game over")
         
         # Create controller for single player
         controller = GameController(mode='single')
@@ -41,3 +35,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
