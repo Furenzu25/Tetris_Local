@@ -98,7 +98,7 @@ class Board:
             bool: True if game over, False otherwise
         """
         # Check if any blocks in the top 2 rows
-        for row in range(2):
+        for row in range(1):
             if any(cell is not None for cell in self.grid[row]):
                 return True
         return False

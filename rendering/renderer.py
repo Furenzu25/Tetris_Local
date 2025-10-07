@@ -15,7 +15,7 @@ class Renderer:
     """
     
     # Display constants
-    CELL_SIZE = 30
+    CELL_SIZE = 40
     BOARD_WIDTH = Board.WIDTH * CELL_SIZE
     BOARD_HEIGHT = Board.HEIGHT * CELL_SIZE
     PREVIEW_SIZE = 4 * CELL_SIZE
